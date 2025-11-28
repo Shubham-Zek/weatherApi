@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
+                integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
+                crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-neutral-900 text-white">
+        <main class="flex flex-col items-center mx-auto gap-5 mt-10">
+            <h1 class="text-4xl font-semibold">Weather</h1>
+            {% include "searchBar.html" %}
+            <div id="weather"></div>
+        </main>
+    </body>
+</html>

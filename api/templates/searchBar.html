@@ -1,0 +1,11 @@
+<input class="outline-none rounded-full bg-orange-500 text-white px-4 py-2"
+       name="search"
+       type="text"
+       hx-post=""
+       hx-trigger="input changed delay:1s, keyup[key=='Enter']"
+       hx-target="#weather"
+       hx-indicator=".htmx-indicator"
+       placeholder="Enter city name"
+       autofocus>
+<span class="htmx-indicator inline-block mx-auto h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-e-transparent"
+      role="status"></span>

@@ -1,0 +1,89 @@
+<h2 class="text-orange-500 font-bold px-2">
+    {{ city.name }}, {{ city.sys.country }}
+    <img class="inline"
+         src="https://flagcdn.com/{{ city.sys.country|lower }}.svg"
+         width="30"
+         alt="">
+    <span class="text-black italic">{{ city.weather.0.description }}</span>
+</h2>
+<p class="px-2">
+    <span class="bg-neutral-600 text-white rounded-full px-3 font-medium">{{ city.main.temp|floatformat:1 }}&#176C</span>
+    temperature from {{ temps.0.min|floatformat:1 }} to {{ temps.0.max|floatformat:1 }} &#176C,
+    wind {{ city.wind.speed }} m/s.
+    clouds {{ city.clouds.all }}%,
+    {{ city.main.pressure }} hpa
+</p>
+<p class="px-2">
+    Geo cords <span class="text-orange-500">[{{ city.coord.lat }}, {{ city.coord.lon }}]</span>
+</p>
+<div class="mt-4 rounded-lg p-2">
+    <h2 class="text-orange-500 font-bold">AQI: {{ aqi.list.0.main.aqi }} ({{ aqi.rating }})</h2>
+    <table class="w-full">
+        <thead>
+            <tr>
+                <th>
+                    SO<sub>2</sub>
+                </th>
+                <th>
+                    NO<sub>2</sub>
+                </th>
+                <th>
+                    PM<sub>2.5</sub>
+                </th>
+                <th>
+                    PM<sub>10</sub>
+                </th>
+                <th>
+                    O<sub>3</sub>
+                </th>
+                <th>CO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center">{{ aqi.list.0.components.so2 }}</td>
+                <td class="text-center">{{ aqi.list.0.components.no2 }}</td>
+                <td class="text-center">{{ aqi.list.0.components.pm2_5 }}</td>
+                <td class="text-center">{{ aqi.list.0.components.pm10 }}</td>
+                <td class="text-center">{{ aqi.list.0.components.o3 }}</td>
+                <td class="text-center">{{ aqi.list.0.components.co }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="mt-4 rounded-lg p-2">
+    <h2 class="text-orange-500 font-bold">3-Hourly forecast</h2>
+    <table class="w-full">
+        <thead>
+            <tr>
+                {% for i in forecast.list|slice:":5" %}<th>{{ i.dt_txt|slice:"11:16" }}</th>{% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in forecast.list|slice:":5" %}<td class="text-center">{{ i.main.temp|floatformat:1 }}&#176C</td>{% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="p-2">
+    <h2 class="text-orange-500 font-bold">5-day forecast</h2>
+    <table class="w-full">
+        {% for i in forecast.list|slice:"::8" %}
+            <tr class="border-b-1">
+                <th class="w-5/10 text-start ps-10">{{ i.dt_txt|slice:"5:10" }}</th>
+                <th class="text-start w-1/10">💧{{ i.clouds.all }}%</th>
+                <th class="flex justify-end ">
+                    <img class="w-8"
+                         src="https://openweathermap.org/img/wn/{{ i.weather.0.icon }}@2x.png"
+                         alt="{{ i.weather.0.icon }} test">
+                </th>
+                {% for j in temps %}
+                    {% if forloop.parentloop.counter == forloop.counter %}
+                        <th class="w-3/10">{{ j.min|floatformat:0 }}&#176 {{ j.max|floatformat:0 }}&#176</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
